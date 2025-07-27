@@ -1,0 +1,1455 @@
+{
+	"info": {
+		"_postman_id": "8ec97407-edff-4727-a103-d7f413ebc340",
+		"name": "Contact API DELETE & PATCH Test Cases",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29495457"
+	},
+	"item": [
+		{
+			"name": "Delete Test Cases",
+			"item": [
+				{
+					"name": "TC-contact-06-01 - Verify the API deletes a contact correctly",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"  pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Check response message is 'Contact deleted'\", function () {",
+									"  pm.expect(pm.response.text()).to.eql(\"Contact deleted\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/contacts/{{contact_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"contacts",
+								"{{contact_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TC-contact-06-02 - Verify the API deletes contact in less than 700 ms",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response time is less than 700ms\", function () {",
+									"  pm.expect(pm.response.responseTime).to.be.below(700);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/contacts/{{contact_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"contacts",
+								"{{contact_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TC-contact-06-03 - Delete a non-existent contact",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"  pm.response.to.have.status(404);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/contacts/68866e34edb8dc00155f5766",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"contacts",
+								"68866e34edb8dc00155f5766"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TC-contact-06-04 - Delete without login and without using a token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"  pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/contacts/{{contact_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"contacts",
+								"{{contact_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TC-contact-06-05 - Delete contact from UI and verify from API using GET",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"  pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/contacts",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"contacts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TC-contact-06-06 - Delete via API and verify in UI",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"  pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/contacts/{{contact_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"contacts",
+								"{{contact_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TC-contact-06-07 - Verify the API behavior when deleting without specifying the contact ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"  pm.response.to.have.status(404);",
+									"}); // bug, staus code should be 404, not 503"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/contacts",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"contacts"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PATCH Test Cases",
+			"item": [
+				{
+					"name": "TC-contact-05-01 - Verify the API can update full data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"  pm.response.to.have.status(200);",
+									"});",
+									"",
+									"const jsonData = pm.response.json();",
+									"",
+									"pm.test(\"First name is updated correctly\", function () {",
+									"  pm.expect(jsonData.firstName).to.eql(\"m\");",
+									"});",
+									"",
+									"pm.test(\"Last name is updated correctly\", function () {",
+									"  pm.expect(jsonData.lastName).to.eql(\"m\");",
+									"});",
+									"",
+									"pm.test(\"Country is not null\", function () {",
+									"  pm.expect(jsonData.country).to.not.be.null;",
+									"});",
+									"",
+									"pm.test(\"All updated fields are of type string\", function () {",
+									"  pm.expect(typeof jsonData.email).to.eql(\"string\");",
+									"  pm.expect(typeof jsonData.phone).to.eql(\"string\");",
+									"  pm.expect(typeof jsonData.city).to.eql(\"string\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"m\",\n  \"lastName\": \"m\",\n  \"birthdate\": \"1992-05-05\",\n  \"email\": \"test@fake.com\",\n  \"phone\": \"8005554244\",\n  \"street1\": \"44 School St.\",\n  \"street2\": \"Apt. 44\",\n  \"city\": \"Washingtomm\",\n  \"stateProvince\": \"QCmm\",\n  \"postalCode\": \"A1A1A5\",\n  \"country\": \"Canada5\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/contacts/{{contact_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"contacts",
+								"{{contact_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TC-contact-05-02 - Verify the API can update part of the data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"  pm.response.to.have.status(200);",
+									"});",
+									"",
+									"const jsonData = pm.response.json();",
+									"",
+									"pm.test(\"First name is updated correctly\", function () {",
+									"  pm.expect(jsonData.firstName).to.eql(\"mohammad\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"firstName\": \"mohammad\" }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/contacts/{{contact_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"contacts",
+								"{{contact_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TC-contact-05-03 - Verify the response time is less than 700 ms when updating part of data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response time is less than 700ms\", function () {",
+									"  pm.expect(pm.response.responseTime).to.be.below(700);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"country\": \"Canada\" }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/contacts/{{contact_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"contacts",
+								"{{contact_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TC-contact-05-04 - Check API behavior when request body is empty",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"  pm.response.to.have.status(200);",
+									"});",
+									"const jsonData = pm.response.json();",
+									"pm.test(\"Email remains unchanged\", function () {",
+									"  pm.expect(jsonData.email).to.eql(\"jdoe@fake.com\"); ",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/contacts/{{contact_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"contacts",
+								"{{contact_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TC-contact-05-05 - Update a non-existing contact",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"  pm.response.to.have.status(404);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/contacts/6886672390172c0015214115",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"contacts",
+								"6886672390172c0015214115"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TC-contact-05-06 - Update without login and without using a token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"  pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/contacts/{{contact_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"contacts",
+								"{{contact_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TC-contact-05-07 - Update from UI and verify from API using GET",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"  pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/contacts/{{contact_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"contacts",
+								"{{contact_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TC-contact-05-08 - Update via API (Postman) and verify in UI",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"  pm.response.to.have.status(200);",
+									"});",
+									"const jsonData = pm.response.json();",
+									"pm.test(\"Phone number updated correctly\", function () {",
+									"  pm.expect(jsonData.phone).to.eql(\"0598998811\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"phone\": \"0598998811\" }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/contacts/{{contact_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"contacts",
+								"{{contact_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TC-contact-05-09 - Update while leaving required fields blank",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"  pm.response.to.have.status(400);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"firstName\": \"\", \"lastName\": \"\" }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/contacts/{{contact_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"contacts",
+								"{{contact_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TC-contact-05-010 - Verify unchanged fields remain intact after partial update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"  pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"city\": \"Nablus\" }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/contacts/{{contact_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"contacts",
+								"{{contact_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TC-contact-05-011 - Verify the API behavior when updating without specifying the contact ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"  pm.response.to.have.status(404);",
+									"}); // bug, status code rturned 503 instead of 404"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/contacts/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"contacts",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TC-contact-05-012 - Update with invalid email format",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"  pm.response.to.have.status(400);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"email\": \"amiller@.com\" }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/contacts/{{contact_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"contacts",
+								"{{contact_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TC-contact-05-013 - Update with missing email domain",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"  pm.response.to.have.status(400);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"email\": \"amiller@\" }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/contacts/{{contact_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"contacts",
+								"{{contact_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TC-contact-05-014 - Update with invalid phone format",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"  pm.response.to.have.status(400);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"phone\": \"abcd1234\" }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/contacts/{{contact_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"contacts",
+								"{{contact_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TC-contact-05-015 - Update with future birthdate",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"  pm.response.to.have.status(400);",
+									"}); // bug, status code returned is 200, not 400.",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"birthdate\": \"2050-01-01\" }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/contacts/{{contact_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"contacts",
+								"{{contact_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TC-contact-05-016 - Update with only one valid field",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"  pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"city\": \"Nablus\" }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/contacts/{{contact_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"contacts",
+								"{{contact_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TC-contact-05-017 - Update multiple fields partially",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"  pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"city\": \"Gaza\",\n  \"stateProvince\": \"GA\", \n  \"postalCode\": \"12345\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/contacts/{{contact_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"contacts",
+								"{{contact_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TC-contact-05-018 - Update using uppercase email",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"  pm.response.to.have.status(200);",
+									"});",
+									"const jsonData = pm.response.json();",
+									"pm.test(\"Email normalized to lowercase\", function () {",
+									"  pm.expect(jsonData.email).to.eql(\"jdoe@fake.com\"); ",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"email\": \"JDOE@FAKE.COM\" }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/contacts/{{contact_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"contacts",
+								"{{contact_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TC-contact-05-019 - Update with incorrect field name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"  pm.response.to.have.status(400);",
+									"}); // bug, invalid field name"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"citty\": \"Amman\" }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/contacts/{{contact_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"contacts",
+								"{{contact_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TC-contact-05-020 - Update with invalid postal code",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"  pm.response.to.have.status(400);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"postalCode\": \"!@#$%\" }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/contacts/{{contact_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"contacts",
+								"{{contact_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TC-contact-05-021 - Update read-only field (ID)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"  pm.response.to.have.status(400);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"_id\": \"123456\" }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/contacts/{{contact_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"contacts",
+								"{{contact_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TC-contact-05-022 - Update birthdate with wrong format",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"  pm.response.to.have.status(400);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"birthdate\": \"02-02-1992\" }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/contacts/{{contact_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"contacts",
+								"{{contact_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
